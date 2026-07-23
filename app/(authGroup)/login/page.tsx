@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -13,8 +14,8 @@ import { Label } from "@/components/ui/label";
 
 const loginPage = () => {
   return (
-    <Card className="w-full max-w-sm">
-      <CardHeader>
+    <Card className="w-full max-w-sm"> 
+      <CardHeader> 
         <CardTitle>Login to your account</CardTitle>
         <CardDescription>
           Enter your email below to login to your account
