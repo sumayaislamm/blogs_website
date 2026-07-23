@@ -1,4 +1,12 @@
+
+
 import "./globals.css";
+import { Nunito_Sans, Roboto_Slab } from "next/font/google";
+import { cn } from "@/lib/utils";
+
+const robotoSlabHeading = Roboto_Slab({subsets:['latin'],variable:'--font-heading'});
+
+const nunitoSans = Nunito_Sans({subsets:['latin'],variable:'--font-sans'});
 
 
 export default function RootLayout({
@@ -9,7 +17,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={"h-full antialiased"}
+      className={cn("h-full antialiased", "font-sans", nunitoSans.variable, robotoSlabHeading.variable)}
     >
       <body className="min-h-full flex flex-col">
         {/* Navbar  */}
