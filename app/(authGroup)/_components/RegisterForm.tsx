@@ -1,13 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { registerAction } from "../_actions/authActions";
 
 const RegisterForm = () => {
   return (
-    <form className="space-y-4">
+    <form action={registerAction} className="space-y-4">
       <Card className="p-5 space-y-4">
         <Input
-          name="username"
+          name="name"
           type="text"
           placeholder="Enter Your Name Here"
           required
