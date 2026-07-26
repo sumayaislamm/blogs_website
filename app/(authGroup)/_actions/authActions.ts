@@ -2,8 +2,19 @@
 
 
 // Login 
-export const loginAction = async (formData: FormData) => {
+type LoginState = {
+  success: true,
+  statusCode : number,
+  message : string,
+  data : {
+    accessToken : string,
+    refreshToken : string
+  }
+}
+
+export const loginAction = async (prevState : LoginState , formData: FormData) => {
   console.log(formData);
+  console.log(prevState, "Previous State")
   const email = formData.get("email");
   const password = formData.get("password");
 
@@ -19,13 +30,14 @@ export const loginAction = async (formData: FormData) => {
     body: JSON.stringify(payload),
   });
   const result = await res.json();
-  console.log(result)
+  console.log(result);
+  return result;
 };
 
 
 // Register 
 
-export const registerAction = async (formData: FormData) => {
+export const registerAction = async ( formData: FormData) => {
   const name = formData.get("name");
   const email = formData.get("email");
   const password = formData.get("password");

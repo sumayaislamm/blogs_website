@@ -15,7 +15,6 @@ const loginPage = () => (
         </div>
 
         {/* Form  */}
-        {/* <LoginFrom></LoginFrom> */}
         <LoginForm />
       </div>
     </div>

@@ -3,6 +3,7 @@
 import "./globals.css";
 import { Nunito_Sans, Roboto_Slab } from "next/font/google";
 import { cn } from "@/lib/utils";
+import { Toaster } from "@/components/ui/sonner";
 
 const robotoSlabHeading = Roboto_Slab({subsets:['latin'],variable:'--font-heading'});
 
@@ -20,6 +21,7 @@ export default function RootLayout({
       className={cn("h-full antialiased", "font-sans", nunitoSans.variable, robotoSlabHeading.variable)}
     >
       <body className="min-h-full flex flex-col">
+         <Toaster position="top-right" richColors />
         {/* Navbar  */}
         {children}
         {/* Footer  */}
