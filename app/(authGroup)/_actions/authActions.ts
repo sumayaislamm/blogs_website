@@ -3,7 +3,7 @@
 
 // Login 
 type LoginState = {
-  success: true,
+  success: boolean,
   statusCode : number,
   message : string,
   data : {
@@ -35,9 +35,20 @@ export const loginAction = async (prevState : LoginState , formData: FormData) =
 };
 
 
-// Register 
+// Register
 
-export const registerAction = async ( formData: FormData) => {
+type RegisterState = {
+  success: boolean,
+  statusCode : number,
+  message : string,
+  data : {
+    accessToken : string,
+    refreshToken : string
+  }
+}
+
+export const registerAction = async ( prevState : RegisterState, formData: FormData) => {
+  console.log(prevState)
   const name = formData.get("name");
   const email = formData.get("email");
   const password = formData.get("password");
