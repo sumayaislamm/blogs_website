@@ -11,6 +11,8 @@ import {
 import { LogOut, Settings, User } from "lucide-react";
 import { logOut } from "@/service/logout";
 import { toast } from "sonner";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 // Navigation items array - easy to maintain and organize
 const NAV_ITEMS = [
@@ -53,13 +55,25 @@ type NavbarProps = {
 };
 
 export function Navbar({ user }: NavbarProps) {
+  const [isLogout, setLogout] = useState(false);
+  const router = useRouter();
   const handleUserMenuAction = async (action: string) => {
     console.log(`User menu action: ${action}`);
     if (action === "logout") {
       await logOut();
-      toast.success("Logout Successfully!");
+      setLogout(true);
+      //   toast.success("User Logged Out Successfully!");
     }
   };
+  useEffect(() => {
+    // if (!isLogout) {
+    //   toast.success("User Not Logged in!");
+    // }
+    if (isLogout) {
+      toast.success("User Logged Out Successfully!");
+      router.push("/login");
+    }
+  }, [isLogout, router]);
 
   return (
     <nav className="border-b border-border bg-background">
