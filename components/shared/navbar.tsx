@@ -11,8 +11,8 @@ import {
 import { LogOut, Settings, User } from "lucide-react";
 import { logOut } from "@/service/logout";
 import { toast } from "sonner";
-import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { Button } from "../ui/button";
 
 // Navigation items array - easy to maintain and organize
 const NAV_ITEMS = [
@@ -55,25 +55,15 @@ type NavbarProps = {
 };
 
 export function Navbar({ user }: NavbarProps) {
-  const [isLogout, setLogout] = useState(false);
   const router = useRouter();
   const handleUserMenuAction = async (action: string) => {
     console.log(`User menu action: ${action}`);
     if (action === "logout") {
       await logOut();
-      setLogout(true);
-      //   toast.success("User Logged Out Successfully!");
-    }
-  };
-  useEffect(() => {
-    // if (!isLogout) {
-    //   toast.success("User Not Logged in!");
-    // }
-    if (isLogout) {
       toast.success("User Logged Out Successfully!");
       router.push("/login");
     }
-  }, [isLogout, router]);
+  };
 
   return (
     <nav className="border-b border-border bg-background">
@@ -97,48 +87,54 @@ export function Navbar({ user }: NavbarProps) {
         </div>
 
         {/* User dropdown menu */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <div className="gap-2 flex cursor-pointer">
-              <div className="size-8 rounded-full bg-primary/10 flex items-center justify-center">
-                <span className="text-xs font-semibold text-primary">JD</span>
+        {user.success ? (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <div className="gap-2 flex cursor-pointer">
+                <div className="size-8 rounded-full bg-primary/10 flex items-center justify-center">
+                  <span className="text-xs font-semibold text-primary">JD</span>
+                </div>
               </div>
-            </div>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-48">
-            <div className="px-2 py-1.5 text-sm font-medium text-foreground mb-2">
-              {user.data?.profile.name || "Name"}
-            </div>
-            <div className="px-2 pb-2 text-xs text-muted-foreground">
-              {user.data?.profile.email || "Email"}
-            </div>
-            <DropdownMenuSeparator className="mb-2" />
-            {USER_MENU_ITEMS.map((item) => {
-              const Icon = item.icon;
-              return (
-                <DropdownMenuItem key={item.href} asChild>
-                  <Link
-                    href={item.href}
-                    className="flex items-center gap-2 cursor-pointer"
-                  >
-                    <Icon className="size-4" />
-                    <span>{item.label}</span>
-                  </Link>
-                </DropdownMenuItem>
-              );
-            })}
-            <DropdownMenuSeparator className="my-2" />
-            <DropdownMenuItem
-              onClick={async () => {
-                handleUserMenuAction("logout");
-              }}
-              className="gap-2 cursor-pointer text-destructive"
-            >
-              <LogOut className="size-4" />
-              <span>Logout</span>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-48">
+              <div className="px-2 py-1.5 text-sm font-medium text-foreground mb-2">
+                {user.data?.profile.name || "Name"}
+              </div>
+              <div className="px-2 pb-2 text-xs text-muted-foreground">
+                {user.data?.profile.email || "Email"}
+              </div>
+              <DropdownMenuSeparator className="mb-2" />
+              {USER_MENU_ITEMS.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <DropdownMenuItem key={item.href} asChild>
+                    <Link
+                      href={item.href}
+                      className="flex items-center gap-2 cursor-pointer"
+                    >
+                      <Icon className="size-4" />
+                      <span>{item.label}</span>
+                    </Link>
+                  </DropdownMenuItem>
+                );
+              })}
+              <DropdownMenuSeparator className="my-2" />
+              <DropdownMenuItem
+                onClick={async () => {
+                  handleUserMenuAction("logout");
+                }}
+                className="gap-2 cursor-pointer text-destructive"
+              >
+                <LogOut className="size-4" />
+                <span>Logout</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        ) : (
+          <Link href={"/login"}>
+            <Button className="cursor-pointer">Login</Button>
+          </Link>
+        )}
       </div>
     </nav>
   );
