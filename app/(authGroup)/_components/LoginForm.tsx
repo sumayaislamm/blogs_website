@@ -6,11 +6,12 @@ import { Input } from "@/components/ui/input";
 import { loginAction } from "../_actions/authActions";
 import { useActionState, useEffect } from "react";
 import { toast } from "sonner";
+import Link from "next/link";
 // import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
   const [state, action, pending] = useActionState(loginAction, false);
-   // Client side Navigate to route step-01
+  // Client side Navigate to route step-01
   // const router = useRouter();
   // console.log(state, "State this one")
 
@@ -18,7 +19,7 @@ const LoginForm = () => {
     if (!state) return;
     // if (state.success) {
     //   // toast.success(state.message || "User Login Successfully!");
-    //   // Client side Navigate to route step-02 
+    //   // Client side Navigate to route step-02
     //   // router.push("/dashboard");
 
     // }
@@ -41,7 +42,10 @@ const LoginForm = () => {
           placeholder="Enter Your Password Here"
           required
         ></Input>
-        <Button type="submit" disabled={pending}>{pending ? "Submitting...." : "Login"}</Button>
+        <Button type="submit" disabled={pending}>
+          {pending ? "Submitting...." : "Login"}
+        </Button>
+        <p className="items-center justify-center text-xs mx-auto mt-[-10]">Do not Have an account? <Link href={"/register"} className="text-primary">Register here</Link> </p>
       </Card>
     </form>
   );
