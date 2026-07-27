@@ -15,14 +15,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  
   return (
     <html
       lang="en"
       className={cn("h-full antialiased", "font-sans", nunitoSans.variable, robotoSlabHeading.variable)}
     >
       <body className="min-h-full flex flex-col">
+        
          <Toaster position="top-right" richColors />
-        {/* Navbar  */}
+        
         {children}
         {/* Footer  */}
         </body>
