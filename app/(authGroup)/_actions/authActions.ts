@@ -1,24 +1,26 @@
 "use server";
 
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import jwt, { JwtPayload } from "jsonwebtoken";
 
-
-
-// Login 
+// Login
 type LoginState = {
-  success: boolean,
-  statusCode : number,
-  message : string,
-  data : {
-    accessToken : string,
-    refreshToken : string
-  }
-}
+  success: boolean;
+  statusCode: number;
+  message: string;
+  data: {
+    accessToken: string;
+    refreshToken: string;
+  };
+};
 
-export const loginAction = async (prevState : LoginState , formData: FormData)  => {
+export const loginAction = async (
+  prevState: LoginState,
+  formData: FormData,
+) => {
   console.log(formData);
-  console.log(prevState, "Previous State")
+  console.log(prevState, "Previous State");
   const email = formData.get("email");
   const password = formData.get("password");
 
@@ -34,43 +36,57 @@ export const loginAction = async (prevState : LoginState , formData: FormData)  
     body: JSON.stringify(payload),
   });
   const result = await res.json();
- if(result.success){
-  const cookieStore = await cookies()
-  cookieStore.set("accessToken", result.data.accessToken, {
-    httpOnly : true,
-    maxAge : 60 * 60 * 24 * 7 ,
-    sameSite : "lax", 
-  })
-  cookieStore.set("refreshToken", result.data.refreshToken, {
-    httpOnly : true,
-    maxAge : 60 * 60 * 24 * 7 ,
-    sameSite : "lax", 
-  });
-  redirect("/dashboard", "replace");
+  if (result.success) {
+    const cookieStore = await cookies();
+    cookieStore.set("accessToken", result.data.accessToken, {
+      httpOnly: true,
+      maxAge: 60 * 60 * 24 * 7,
+      sameSite: "lax",
+    });
+    cookieStore.set("refreshToken", result.data.refreshToken, {
+      httpOnly: true,
+      maxAge: 60 * 60 * 24 * 7,
+      sameSite: "lax",
+    });
 
- }
+    const decodedToken = jwt.decode(result.data.accessToken) as JwtPayload;
+    // console.log(decodedToken);
+    if (decodedToken.role === "USER") {
+      redirect("/dashboard", "replace");
+    }
+    else if (decodedToken.role === "AUTHOR") {
+      redirect("/author-dashboard", "replace");
+    }
+    else if (decodedToken.role === "ADMIN") {
+      redirect("/admin-dashboard", "replace");
+    }
+  }
   return result;
 };
 
-
 // Register
 
-type RegisterState = {
-  success: boolean,
-  statusCode?: number,
-  message: string,
-  data?: {
-    user: {
-      id: string,
-      name: string,
-      email: string,
-      role: string,
-      [key: string]: string
+type RegisterState =
+  | {
+      success: boolean;
+      statusCode?: number;
+      message: string;
+      data?: {
+        user: {
+          id: string;
+          name: string;
+          email: string;
+          role: string;
+          [key: string]: string;
+        };
+      };
     }
-  }
-} | false;
+  | false;
 
-export const registerAction = async (prevState: RegisterState, formData: FormData) => {
+export const registerAction = async (
+  prevState: RegisterState,
+  formData: FormData,
+) => {
   const name = formData.get("name");
   const email = formData.get("email");
   const password = formData.get("password");
