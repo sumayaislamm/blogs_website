@@ -19,7 +19,12 @@ export const getMe = async () =>{
         // Authorization : accessToken as unknown as string,
         Authorization : `${accessToken}`,
 
-    }
+    },
+      cache : "force-cache", 
+      next : {
+        revalidate :  60 * 60 * 24 * 7 ,//1 day
+        tags : ["my-profile"]
+      }
   });
   const result = res.json(); 
   console.log (result);
