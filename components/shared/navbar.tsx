@@ -66,19 +66,6 @@ export function Navbar({ user }: NavbarProps) {
     }
   };
 
-  function AuthButton() {
-    const pathname = usePathname();
-    return pathname === "/login" ? (
-      <Link href="/register">
-        <Button className="cursor-pointer">Register</Button>
-      </Link>
-    ) : (
-      <Link href="/login">
-        <Button className="cursor-pointer">Login</Button>
-      </Link>
-    );
-  }
-
   return (
     <nav className="border-b border-border bg-background">
       <div className="flex h-16 items-center justify-between px-4 md:px-6">
