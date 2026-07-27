@@ -15,7 +15,7 @@ type LoginState = {
   }
 }
 
-export const loginAction = async (prevState : LoginState , formData: FormData) => {
+export const loginAction = async (prevState : LoginState , formData: FormData)  => {
   console.log(formData);
   console.log(prevState, "Previous State")
   const email = formData.get("email");
@@ -32,7 +32,7 @@ export const loginAction = async (prevState : LoginState , formData: FormData) =
     },
     body: JSON.stringify(payload),
   });
-  const result : LoginState = await res.json();
+  const result = await res.json();
  if(result.success){
   const cookieStore = await cookies()
   cookieStore.set("accessToken", result.data.accessToken, {

@@ -6,14 +6,21 @@ import { Input } from "@/components/ui/input";
 import { loginAction } from "../_actions/authActions";
 import { useActionState, useEffect } from "react";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
   const [state, action, pending] = useActionState(loginAction, false);
-  console.log(state, "State this one")
+   // Client side Navigate to route step-01
+  const router = useRouter();
+  // console.log(state, "State this one")
+
   useEffect(() => {
     if (!state) return;
     if (state.success) {
       toast.success(state.message || "User Login Successfully!");
+      // Client side Navigate to route step-02 
+      router.push("/dashboard");
+
     }
     if (!state.success) {
       toast.error(state.message || "Login Failed, Try Again!");
