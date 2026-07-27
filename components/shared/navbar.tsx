@@ -11,7 +11,7 @@ import {
 import { LogOut, Settings, User } from "lucide-react";
 import { logOut } from "@/service/logout";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Button } from "../ui/button";
 
 // Navigation items array - easy to maintain and organize
@@ -55,6 +55,7 @@ type NavbarProps = {
 };
 
 export function Navbar({ user }: NavbarProps) {
+  const pathname = usePathname();
   const router = useRouter();
   const handleUserMenuAction = async (action: string) => {
     console.log(`User menu action: ${action}`);
@@ -64,6 +65,19 @@ export function Navbar({ user }: NavbarProps) {
       router.push("/login");
     }
   };
+
+  function AuthButton() {
+    const pathname = usePathname();
+    return pathname === "/login" ? (
+      <Link href="/register">
+        <Button className="cursor-pointer">Register</Button>
+      </Link>
+    ) : (
+      <Link href="/login">
+        <Button className="cursor-pointer">Login</Button>
+      </Link>
+    );
+  }
 
   return (
     <nav className="border-b border-border bg-background">
@@ -130,8 +144,12 @@ export function Navbar({ user }: NavbarProps) {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+        ) : pathname === "/login" ? (
+          <Link href="/register">
+            <Button className="cursor-pointer">Register</Button>
+          </Link>
         ) : (
-          <Link href={"/login"}>
+          <Link href="/login">
             <Button className="cursor-pointer">Login</Button>
           </Link>
         )}
