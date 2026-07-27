@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,7 +8,7 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu'
-import { ChevronDown, LogOut, Settings, User } from 'lucide-react'
+import { LogOut, Settings, User } from 'lucide-react'
 
 // Navigation items array - easy to maintain and organize
 const NAV_ITEMS = [
@@ -54,9 +53,9 @@ type NavbarProps = {
 };
 
 export function Navbar({user} : NavbarProps) {
-    const handleUserMenuAction = (action: string) =>{
-        console.log(`User menu action: ${action}`)
-    }
+    // const handleUserMenuAction = (action: string) =>{
+    //     console.log(`User menu action: ${action}`)
+    // }
   return (
     <nav className="border-b border-border bg-background">
       <div className="flex h-16 items-center justify-between px-4 md:px-6">
