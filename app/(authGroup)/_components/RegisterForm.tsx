@@ -22,25 +22,7 @@ const RegisterForm = () => {
   }, [state]);
   return (
     <form action={action} className="space-y-4">
-      <Card className="p-5 space-y-4">
-        <Input
-          name="name"
-          type="text"
-          placeholder="Enter Your Name Here"
-          required
-        ></Input>
-        <Input
-          name="email"
-          type="email"
-          placeholder="Enter Your Email Here"
-          required
-        ></Input>
-        <Input
-          name="password"
-          type="password"
-          placeholder="Enter Your Password Here"
-          required
-        ></Input>
+      
         <Button type="submit" disabled={pending}>
           {" "}
           {pending ? "Submitting...." : "Register"}
