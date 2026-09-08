@@ -45,7 +45,12 @@ const RegisterForm = () => {
           {" "}
           {pending ? "Submitting...." : "Register"}
         </Button>
-        
+        <p className="items-center justify-center text-xs mx-auto mt-[-10]">
+          Already have an account?{" "}
+          <Link href={"/login"} className="text-primary">
+            Go for Login
+          </Link>{" "}
+        </p>
       </Card>
     </form>
   );
